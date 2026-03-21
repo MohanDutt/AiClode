@@ -1,0 +1,170 @@
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+globalization:
+  defaultLocale: en-US
+  supportedLocales:
+    - en-US
+    - es-ES
+    - fr-FR
+    - de-DE
+    - ar-SA
+  defaultTimezone: UTC
+  supportedTimezones:
+    - UTC
+    - America/New_York
+    - Europe/London
+    - Europe/Berlin
+    - Asia/Dubai
+    - Asia/Singapore
+  defaultCurrency: USD
+  supportedCurrencies:
+    - USD
+    - EUR
+    - GBP
+    - CAD
+    - AUD
+    - SGD
+    - AED
+  jobApplicationRegions:
+    - US
+    - CA
+    - GB
+    - DE
+    - FR
+    - AE
+    - SG
+
+communications:
+  baseUrl: https://api.aiclod.example
+  chat:
+    enabled: true
+    transport: websocket
+    moderationQueue: communications.chat.moderation
+  notifications:
+    provider: database,rabbitmq,email
+    digestTime: "08:00"
+  email:
+    provider: smtp
+    fromName: AiClod
+    fromAddress: no-reply@aiclod.example
+    smtpHost: smtp.aiclod.example
+    smtpPort: "587"
+
+web:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/aiclod/web
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3001
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    NEXT_PUBLIC_API_BASE_URL: https://aiclod.example/api/v1
+
+api:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/aiclod/api
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3000
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  env:
+    APP_ENV: production
+    APP_NAME: AiClod
+    PORT: "3000"
+    OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector.observability:4318
+  secrets:
+    DATABASE_URL: postgresql://user:password@postgresql.default.svc.cluster.local:5432/aiclod
+    REDIS_URL: redis://valkey.default.svc.cluster.local:6379
+    RABBITMQ_URL: amqps://user:password@rabbitmq.default.svc.cluster.local:5671
+    OPENSEARCH_URL: https://opensearch.default.svc.cluster.local:9200
+    KEYCLOAK_BASE_URL: https://auth.aiclod.example
+    S3_ENDPOINT: https://s3.aiclod.example
+    S3_BUCKET: aiclod-prod
+    S3_REGION: us-east-1
+    JWT_ISSUER: https://auth.aiclod.example/realms/aiclod
+    JWT_AUDIENCE: aiclod-api
+    JWT_JWKS_URI: https://auth.aiclod.example/realms/aiclod/protocol/openid-connect/certs
+
+worker:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/aiclod/worker
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 200m
+      memory: 384Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  env:
+    APP_ENV: production
+    OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector.observability:4318
+
+hpa:
+  api:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 75
+  worker:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: aiclod.example
+      paths:
+        - path: /
+          pathType: Prefix
+          service: web
+        - path: /api
+          pathType: Prefix
+          service: api
+  tls:
+    - secretName: aiclod-tls
+      hosts:
+        - aiclod.example
+
+monitoring:
+  serviceMonitor:
+    enabled: false
+    namespace: observability
