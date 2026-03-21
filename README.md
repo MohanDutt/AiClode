@@ -8,6 +8,8 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 
 - [System Architecture](docs/architecture/aiclod-system-architecture.md)
 - [NestJS Backend Architecture](docs/backend/aiclod-nestjs-backend-architecture.md)
+- [Next.js Frontend Architecture](docs/frontend/aiclod-nextjs-frontend-architecture.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
 
