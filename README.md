@@ -13,3 +13,9 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - [Monetization and Billing Architecture](docs/billing/aiclod-monetization-and-billing-architecture.md)
 - [Security Architecture](docs/security/aiclod-security-architecture.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+
