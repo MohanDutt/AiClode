@@ -42,6 +42,10 @@ grep -q "Communication services" docs/operations/aiclod-deployment-setup.md
 grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md
 grep -q "chat" config/communications/channels.yaml
 grep -q '"defaultLocale": "en-US"' config/i18n/supported-locales.json
+grep -q "build-and-release:" .github/workflows/ci-cd.yml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-api.yaml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-worker.yaml
+grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
 grep -q "unit tests" docs/quality/aiclod-testing-strategy.md
 grep -q "integration tests" docs/quality/aiclod-testing-strategy.md
 grep -q "API tests" docs/quality/aiclod-testing-strategy.md
