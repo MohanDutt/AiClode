@@ -987,6 +987,22 @@ This stack is the best default for AiClod because it combines:
 - **low lock-in risk** because every critical component has a strong open-source deployment path.
 
 The result is a platform that can launch quickly as a modular monolith, scale to meaningful SaaS traffic, and evolve into a more distributed architecture only when that complexity becomes justified.
+## 17. Recommended Technology Baseline
+
+This architecture is cloud-agnostic, so the technology list is intentionally interchangeable.
+
+| Concern | Preferred Baseline | Acceptable Alternatives |
+|---|---|---|
+| Frontend | React/Next.js | Vue/Nuxt, Angular |
+| Backend | Node.js (NestJS) or Java/Kotlin (Spring Boot) or .NET | Go, Python/FastAPI |
+| Database | PostgreSQL | MySQL-compatible if required |
+| Cache | Redis / Valkey | KeyDB |
+| Search | OpenSearch | Elasticsearch, Meilisearch (smaller scale) |
+| Queue | RabbitMQ / NATS / Redis Streams / Kafka | Cloud-native queues |
+| Object Storage | S3-compatible | Azure Blob, GCS, MinIO |
+| Auth | Keycloak / Auth0 / Ory / cloud OIDC | Custom auth only if unavoidable |
+| Deployment | Kubernetes + Helm/Kustomize | OpenShift, Rancher, managed K8s |
+| Telemetry | OpenTelemetry + Prometheus + Grafana | Vendor APM with OTel support |
 
 ---
 
@@ -1007,6 +1023,7 @@ AiClod should launch as a **modular monolith** with four primary runtime roles: 
 - **Observability:** OpenTelemetry + Prometheus + Grafana + Loki + Tempo
 
 This provides:
+AiClod should launch as a **modular monolith** with four primary runtime roles: **web**, **API**, **worker**, and **scheduler**, backed by **PostgreSQL**, **Redis**, **object storage**, **search**, and a **queue/event layer**. This provides:
 
 - Simple developer onboarding through Docker Compose.
 - Production-grade Kubernetes deployment with autoscaling.

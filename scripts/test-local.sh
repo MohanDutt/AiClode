@@ -26,6 +26,8 @@ required_files=(
   "config/i18n/email-templates/application-received.en-US.liquid"
   "docs/architecture/aiclod-global-platform-features.md"
   "docs/architecture/aiclod-ai-features.md"
+  "config/i18n/email-templates/application-received.en-US.liquid"
+  "docs/architecture/aiclod-global-platform-features.md"
   "docs/operations/aiclod-deployment-setup.md"
   "docs/quality/aiclod-testing-strategy.md"
 )
@@ -51,6 +53,20 @@ grep -q "chat" config/communications/channels.yaml
 grep -q '"defaultLocale": "en-US"' config/i18n/supported-locales.json
 grep -q '"provider": "openai-compatible"' config/ai/model-routing.json
 grep -q "resumeScoring" config/ai/features.yaml
+grep -q "build-and-release:" .github/workflows/ci-cd.yml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-api.yaml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-worker.yaml
+grep -q "DEFAULT_PLATFORM_LOCALE" deploy/helm/aiclod/templates/configmap.yaml
+grep -q "SUPPORTED_CURRENCIES" deploy/helm/aiclod/templates/configmap.yaml
+grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
+grep -q "Communication services" docs/operations/aiclod-deployment-setup.md
+grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md
+grep -q "chat" config/communications/channels.yaml
+grep -q '"defaultLocale": "en-US"' config/i18n/supported-locales.json
+grep -q "build-and-release:" .github/workflows/ci-cd.yml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-api.yaml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-worker.yaml
+grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
 grep -q "unit tests" docs/quality/aiclod-testing-strategy.md
 grep -q "integration tests" docs/quality/aiclod-testing-strategy.md
 grep -q "API tests" docs/quality/aiclod-testing-strategy.md
