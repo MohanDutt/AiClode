@@ -45,6 +45,9 @@ jobs:
           test -f config/environments/staging.env.example
           test -f config/environments/production.env.example
 
+      - name: Run local validation script
+        run: ./scripts/test-local.sh
+
   build-and-release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && hashFiles('apps/web/Dockerfile') != '' && hashFiles('apps/api/Dockerfile') != '' && hashFiles('apps/worker/Dockerfile') != ''
     runs-on: ubuntu-latest
