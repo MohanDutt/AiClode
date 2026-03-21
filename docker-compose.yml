@@ -13,6 +13,7 @@ services:
       NEXT_PUBLIC_DEFAULT_TIMEZONE: UTC
       NEXT_PUBLIC_AI_CHATBOT_ENABLED: "true"
       NEXT_PUBLIC_AI_RECOMMENDATIONS_ENABLED: "true"
+      NEXT_PUBLIC_ADMIN_CONSOLE_ENABLED: "true"
       PORT: 3001
     ports:
       - "3001:3001"
@@ -45,6 +46,12 @@ services:
       SKILL_GAP_MODEL: skill-gap-analyst-v1
       PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
       CHATBOT_MODEL: candidate-assistant-v1
+      ADMIN_CONSOLE_ENABLED: "true"
+      ADMIN_API_BASE_URL: http://localhost:3000/api/v1/admin
+      ADMIN_FRAUD_QUEUE: admin.fraud.review
+      ADMIN_ANALYTICS_PROVIDER: postgres
+      ADMIN_REVENUE_CURRENCY: USD
+      FEATURE_FLAG_PROVIDER: config
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
     ports:
       - "3000:3000"
@@ -86,6 +93,12 @@ services:
       SKILL_GAP_MODEL: skill-gap-analyst-v1
       PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
       CHATBOT_MODEL: candidate-assistant-v1
+      ADMIN_CONSOLE_ENABLED: "true"
+      ADMIN_API_BASE_URL: http://api:3000/api/v1/admin
+      ADMIN_FRAUD_QUEUE: admin.fraud.review
+      ADMIN_ANALYTICS_PROVIDER: postgres
+      ADMIN_REVENUE_CURRENCY: USD
+      FEATURE_FLAG_PROVIDER: config
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
     depends_on:
       postgres:

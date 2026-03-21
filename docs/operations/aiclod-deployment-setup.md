@@ -13,6 +13,7 @@ This repository includes deployment scaffolding for:
 - **Globalization defaults** for locale, currency, timezone, and international applications
 - **Communication services** for chat, notifications, and localized email templates
 - **AI runtime defaults** for recommendations, scoring, analytics, and chatbot support
+- **Admin runtime defaults** for moderation, fraud review, dashboards, revenue tracking, and feature flags
 
 ## Included Files
 
@@ -29,6 +30,9 @@ This repository includes deployment scaffolding for:
 - `config/ai/features.yaml`
 - `config/ai/model-routing.json`
 - `config/ai/prompts/*`
+- `config/admin/policies.yaml`
+- `config/admin/dashboard-metrics.yaml`
+- `config/admin/feature-flags.json`
 
 ## Local Usage
 
@@ -59,6 +63,9 @@ The Helm chart config map publishes platform-wide runtime values for:
 - `JOB_APPLICATION_REGIONS`
 - `CHAT_WS_BASE_URL` and notification/email provider settings
 - `AI_FEATURES_ENABLED`, provider routing, and model defaults for recommendations, scoring, forecasting, and chatbot flows
+- `ADMIN_CONSOLE_ENABLED`, admin analytics/fraud settings, revenue currency, and feature-flag provider defaults
+
+This keeps web, API, and worker runtimes aligned on the same internationalization, communications, AI, and admin defaults.
 
 This keeps web, API, and worker runtimes aligned on the same internationalization, communications, and AI defaults.
 
@@ -70,5 +77,6 @@ This keeps web, API, and worker runtimes aligned on the same internationalizatio
 - Image repositories/tags are designed to be overridden by CI/CD.
 - Secrets in Helm are placeholders and should be replaced with External Secrets or a secret manager for real environments.
 - The GitHub Actions release job activates once application Dockerfiles are present under `apps/web`, `apps/api`, and `apps/worker`.
+- OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, AI inference latency, and admin queue backlog.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, and AI inference latency.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, and email dispatch worker health.

@@ -11,12 +11,14 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - International job applications with region-specific eligibility, consent, and compliance metadata.
 - Omnichannel communication scaffolding for in-app chat, notifications, and localized email templates.
 - AI feature scaffolding for job recommendations, resume scoring, skill-gap analysis, predictive hiring analytics, and chatbot support.
+- Admin platform scaffolding for user/employer management, moderation, fraud detection, analytics dashboards, revenue tracking, and feature flags.
 
 ## Documentation
 
 - [System Architecture](docs/architecture/aiclod-system-architecture.md)
 - [Global Platform Features](docs/architecture/aiclod-global-platform-features.md)
 - [AI Features](docs/architecture/aiclod-ai-features.md)
+- [Admin Platform](docs/architecture/aiclod-admin-platform.md)
 ## Documentation
 
 - [System Architecture](docs/architecture/aiclod-system-architecture.md)
@@ -34,6 +36,8 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - `config/i18n/` stores locale metadata and localized email templates.
 - `config/communications/` stores channel policy defaults for chat, notifications, and email delivery.
 - `config/ai/` stores AI feature flags, model routing defaults, and prompt templates.
+- `config/admin/` stores admin policies, dashboard defaults, and feature-flag metadata.
+- `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)

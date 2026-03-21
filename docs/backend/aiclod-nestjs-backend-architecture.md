@@ -78,6 +78,12 @@ The backend should expose AI features behind dedicated application services such
 
 ---
 
+## 2.6 Admin Service Responsibilities
+
+The backend should expose dedicated admin application services such as `AdminUserManagementService`, `EmployerReviewService`, `JobModerationService`, `FraudReviewService`, `AdminAnalyticsService`, `RevenueReportingService`, and `FeatureFlagAdministrationService`. These services should enforce role checks, emit audit events, and isolate privileged workflows from tenant-facing APIs.
+
+---
+
 ## 3. High-Level Backend Topology
 
 ```mermaid

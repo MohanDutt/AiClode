@@ -86,6 +86,12 @@ The frontend should present AI outputs as assistive guidance with clear provenan
 
 ---
 
+## 3.3 Admin Experience Requirements
+
+The frontend should provide a distinct admin console with queue-based workflows for moderation and fraud review, analytics dashboard modules, revenue reporting views, and governed feature-flag controls with confirmation and audit affordances.
+
+---
+
 ## 4. High-Level Frontend Architecture
 
 ```mermaid

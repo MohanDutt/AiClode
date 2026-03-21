@@ -63,6 +63,12 @@ AiClod should treat AI as an internal platform capability with explicit governan
 
 ---
 
+## 2.6 Admin Platform Requirements
+
+AiClod should include an operations-grade admin layer for trust, safety, compliance, monetization, and rollout control. The platform should support centralized moderation queues, fraud case management, finance analytics, and feature-flag governance without bypassing tenant scoping or audit policies.
+
+---
+
 ## 3. Context Diagram
 
 ```mermaid

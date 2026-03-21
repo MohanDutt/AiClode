@@ -15,6 +15,7 @@ data:
   NEXT_PUBLIC_SUPPORTED_CURRENCIES: {{ join "," .Values.globalization.supportedCurrencies | quote }}
   NEXT_PUBLIC_AI_CHATBOT_ENABLED: {{ ternary "true" "false" .Values.ai.enabled | quote }}
   NEXT_PUBLIC_AI_RECOMMENDATIONS_ENABLED: {{ ternary "true" "false" .Values.ai.enabled | quote }}
+  NEXT_PUBLIC_ADMIN_CONSOLE_ENABLED: {{ ternary "true" "false" .Values.admin.enabled | quote }}
   DEFAULT_PLATFORM_LOCALE: {{ .Values.globalization.defaultLocale | quote }}
   SUPPORTED_LOCALES: {{ join "," .Values.globalization.supportedLocales | quote }}
   DEFAULT_TIMEZONE: {{ .Values.globalization.defaultTimezone | quote }}
@@ -40,4 +41,10 @@ data:
   SKILL_GAP_MODEL: {{ .Values.ai.skillGapModel | quote }}
   PREDICTIVE_HIRING_MODEL: {{ .Values.ai.predictiveHiringModel | quote }}
   CHATBOT_MODEL: {{ .Values.ai.chatbotModel | quote }}
+  ADMIN_CONSOLE_ENABLED: {{ ternary "true" "false" .Values.admin.enabled | quote }}
+  ADMIN_API_BASE_URL: {{ .Values.admin.apiBaseUrl | quote }}
+  ADMIN_FRAUD_QUEUE: {{ .Values.admin.fraudQueue | quote }}
+  ADMIN_ANALYTICS_PROVIDER: {{ .Values.admin.analyticsProvider | quote }}
+  ADMIN_REVENUE_CURRENCY: {{ .Values.admin.revenueCurrency | quote }}
+  FEATURE_FLAG_PROVIDER: {{ .Values.admin.featureFlagProvider | quote }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.api.env.OTEL_EXPORTER_OTLP_ENDPOINT | quote }}

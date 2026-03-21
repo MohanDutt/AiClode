@@ -1195,3 +1195,28 @@ Stores tenant-level or job-level forecasts for time-to-fill, conversion rate, of
 ### 19.5 `chatbot_sessions` and `chatbot_messages`
 
 Persist AI conversation sessions, retrieved context ids, escalation flags, model identifiers, user feedback, and moderation decisions so support and compliance teams can audit assistant behavior.
+
+
+---
+
+## 20. Admin Operations Extensions
+
+### 20.1 `admin_cases`
+
+Stores moderation, fraud, compliance, and support escalations with subject type, priority, assigned reviewer, disposition, and resolution timestamps.
+
+### 20.2 `job_moderation_reviews`
+
+Stores job review outcomes including policy hits, moderator notes, publish status, escalation reason, and audit references.
+
+### 20.3 `fraud_signals` and `fraud_reviews`
+
+Persist normalized fraud indicators, risk scores, model/rule versions, analyst decisions, and linked entities such as users, employers, jobs, payments, or conversations.
+
+### 20.4 `admin_dashboard_snapshots`
+
+Stores precomputed marketplace, moderation, fraud, and finance KPI aggregates for fast admin dashboard rendering.
+
+### 20.5 `feature_flag_definitions` and `feature_flag_assignments`
+
+Store flag metadata, ownership, rollout strategy, default state, audit notes, and scoped assignments for tenants, plans, regions, or cohorts.

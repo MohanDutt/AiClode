@@ -77,6 +77,14 @@ ai:
     skillGap: ai.skill-gap.analysis
     predictiveAnalytics: ai.hiring.analytics
 
+admin:
+  enabled: true
+  apiBaseUrl: https://api.aiclod.example/api/v1/admin
+  fraudQueue: admin.fraud.review
+  analyticsProvider: postgres
+  revenueCurrency: USD
+  featureFlagProvider: config
+
 web:
   replicaCount: 2
   image:
