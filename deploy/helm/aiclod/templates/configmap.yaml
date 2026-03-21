@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "aiclod.fullname" . }}-config
+  labels:
+    {{- include "aiclod.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.api.env.APP_ENV | quote }}
+  APP_NAME: {{ .Values.api.env.APP_NAME | quote }}
+  PORT: {{ .Values.api.env.PORT | quote }}
+  NEXT_PUBLIC_API_BASE_URL: {{ .Values.web.env.NEXT_PUBLIC_API_BASE_URL | quote }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.api.env.OTEL_EXPORTER_OTLP_ENDPOINT | quote }}
