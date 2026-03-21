@@ -11,6 +11,8 @@ services:
       NEXT_PUBLIC_SUPPORTED_LOCALES: en-US,es-ES,fr-FR,de-DE,ar-SA
       NEXT_PUBLIC_SUPPORTED_CURRENCIES: USD,EUR,GBP,CAD,AUD,SGD,AED
       NEXT_PUBLIC_DEFAULT_TIMEZONE: UTC
+      NEXT_PUBLIC_AI_CHATBOT_ENABLED: "true"
+      NEXT_PUBLIC_AI_RECOMMENDATIONS_ENABLED: "true"
       PORT: 3001
     ports:
       - "3001:3001"
@@ -35,6 +37,14 @@ services:
       CHAT_WS_BASE_URL: ws://localhost:3000/ws
       SMTP_HOST: mailpit
       SMTP_PORT: 1025
+      AI_FEATURES_ENABLED: "true"
+      AI_GATEWAY_BASE_URL: http://api:3000/ai
+      AI_VECTOR_STORE: opensearch
+      JOB_RECOMMENDATION_MODEL: job-recommender-v1
+      RESUME_SCORING_MODEL: resume-ranker-v1
+      SKILL_GAP_MODEL: skill-gap-analyst-v1
+      PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
+      CHATBOT_MODEL: candidate-assistant-v1
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
     ports:
       - "3000:3000"
@@ -69,6 +79,13 @@ services:
       SMTP_HOST: mailpit
       SMTP_PORT: 1025
       NOTIFICATION_PROVIDER: database,rabbitmq,email
+      AI_FEATURES_ENABLED: "true"
+      AI_GATEWAY_BASE_URL: http://api:3000/ai
+      JOB_RECOMMENDATION_MODEL: job-recommender-v1
+      RESUME_SCORING_MODEL: resume-ranker-v1
+      SKILL_GAP_MODEL: skill-gap-analyst-v1
+      PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
+      CHATBOT_MODEL: candidate-assistant-v1
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
     depends_on:
       postgres:

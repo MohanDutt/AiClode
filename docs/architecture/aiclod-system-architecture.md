@@ -57,6 +57,12 @@ Key requirements:
 
 ---
 
+## 2.5 AI Capability Requirements
+
+AiClod should treat AI as an internal platform capability with explicit governance, observability, and fallback behavior. Core responsibilities include recommendation retrieval, scoring pipelines, forecasting services, and conversational assistants that operate within tenancy and permission boundaries.
+
+---
+
 ## 3. Context Diagram
 
 ```mermaid

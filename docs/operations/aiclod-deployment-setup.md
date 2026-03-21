@@ -12,6 +12,7 @@ This repository includes deployment scaffolding for:
 - **Monitoring/logging telemetry** via OpenTelemetry Collector
 - **Globalization defaults** for locale, currency, timezone, and international applications
 - **Communication services** for chat, notifications, and localized email templates
+- **AI runtime defaults** for recommendations, scoring, analytics, and chatbot support
 
 ## Included Files
 
@@ -25,6 +26,9 @@ This repository includes deployment scaffolding for:
 - `config/i18n/supported-locales.json`
 - `config/i18n/email-templates/*`
 - `config/communications/channels.yaml`
+- `config/ai/features.yaml`
+- `config/ai/model-routing.json`
+- `config/ai/prompts/*`
 
 ## Local Usage
 
@@ -54,6 +58,9 @@ The Helm chart config map publishes platform-wide runtime values for:
 - `DEFAULT_CURRENCY` and `SUPPORTED_CURRENCIES`
 - `JOB_APPLICATION_REGIONS`
 - `CHAT_WS_BASE_URL` and notification/email provider settings
+- `AI_FEATURES_ENABLED`, provider routing, and model defaults for recommendations, scoring, forecasting, and chatbot flows
+
+This keeps web, API, and worker runtimes aligned on the same internationalization, communications, and AI defaults.
 
 This keeps web, API, and worker runtimes aligned on the same internationalization and communications defaults.
 
@@ -63,4 +70,5 @@ This keeps web, API, and worker runtimes aligned on the same internationalizatio
 - Image repositories/tags are designed to be overridden by CI/CD.
 - Secrets in Helm are placeholders and should be replaced with External Secrets or a secret manager for real environments.
 - The GitHub Actions release job activates once application Dockerfiles are present under `apps/web`, `apps/api`, and `apps/worker`.
+- OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, and AI inference latency.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, and email dispatch worker health.

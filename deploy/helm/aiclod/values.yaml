@@ -61,6 +61,22 @@ communications:
     smtpHost: smtp.aiclod.example
     smtpPort: "587"
 
+ai:
+  enabled: true
+  provider: openai-compatible
+  gatewayBaseUrl: https://ai.aiclod.example
+  vectorStore: opensearch
+  recommendationModel: job-recommender-v1
+  resumeScoringModel: resume-ranker-v1
+  skillGapModel: skill-gap-analyst-v1
+  predictiveHiringModel: hiring-forecast-v1
+  chatbotModel: candidate-assistant-v1
+  queues:
+    recommendations: ai.job.recommendations
+    resumeScoring: ai.resume.scoring
+    skillGap: ai.skill-gap.analysis
+    predictiveAnalytics: ai.hiring.analytics
+
 web:
   replicaCount: 2
   image:

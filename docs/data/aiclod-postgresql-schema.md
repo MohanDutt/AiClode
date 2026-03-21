@@ -1170,3 +1170,28 @@ Persist in-app notifications and channel-specific delivery attempts.
 ### 16.5 `email_templates`
 
 Versioned localized transactional templates. Recommended columns: tenant_id, template_key, locale_code, subject_template, body_html_template, body_text_template, version, is_active, and checksum.
+
+
+---
+
+## 19. AI Intelligence Extensions
+
+### 19.1 `candidate_recommendation_snapshots`
+
+Stores versioned recommendation outputs including ranking position, explanation payload, locale, market context, and the model/rule bundle used to generate the list.
+
+### 19.2 `resume_scorecards`
+
+Stores candidate score, score band, rationale JSON, normalization version, reviewer override metadata, and the source resume/profile artifacts used for scoring.
+
+### 19.3 `skill_gap_reports`
+
+Stores inferred missing skills, adjacent skills, recommended learning actions, confidence levels, and the job/candidate feature vectors or extracted facts that informed the analysis.
+
+### 19.4 `hiring_forecasts`
+
+Stores tenant-level or job-level forecasts for time-to-fill, conversion rate, offer acceptance, and sourcing efficiency with training window metadata and confidence intervals.
+
+### 19.5 `chatbot_sessions` and `chatbot_messages`
+
+Persist AI conversation sessions, retrieved context ids, escalation flags, model identifiers, user feedback, and moderation decisions so support and compliance teams can audit assistant behavior.

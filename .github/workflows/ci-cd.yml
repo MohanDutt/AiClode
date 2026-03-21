@@ -38,10 +38,13 @@ jobs:
               *Path('deploy/monitoring').rglob('*.yaml'),
               *Path('deploy/monitoring').rglob('*.yml'),
               *Path('config/communications').glob('*.yaml'),
+              *Path('config/ai').glob('*.yaml'),
+              *Path('config/ai/prompts').glob('*.yaml'),
               *Path('config/i18n/email-templates').glob('*.liquid'),
           ]
           json_files = [
               *Path('config/i18n').glob('*.json'),
+              *Path('config/ai').glob('*.json'),
               *Path('deploy').rglob('*.yaml'),
               *Path('deploy').rglob('*.yml'),
           ]

@@ -13,6 +13,8 @@ data:
   NEXT_PUBLIC_SUPPORTED_LOCALES: {{ join "," .Values.globalization.supportedLocales | quote }}
   NEXT_PUBLIC_DEFAULT_TIMEZONE: {{ .Values.globalization.defaultTimezone | quote }}
   NEXT_PUBLIC_SUPPORTED_CURRENCIES: {{ join "," .Values.globalization.supportedCurrencies | quote }}
+  NEXT_PUBLIC_AI_CHATBOT_ENABLED: {{ ternary "true" "false" .Values.ai.enabled | quote }}
+  NEXT_PUBLIC_AI_RECOMMENDATIONS_ENABLED: {{ ternary "true" "false" .Values.ai.enabled | quote }}
   DEFAULT_PLATFORM_LOCALE: {{ .Values.globalization.defaultLocale | quote }}
   SUPPORTED_LOCALES: {{ join "," .Values.globalization.supportedLocales | quote }}
   DEFAULT_TIMEZONE: {{ .Values.globalization.defaultTimezone | quote }}
@@ -29,4 +31,13 @@ data:
   EMAIL_FROM_ADDRESS: {{ .Values.communications.email.fromAddress | quote }}
   SMTP_HOST: {{ .Values.communications.email.smtpHost | quote }}
   SMTP_PORT: {{ .Values.communications.email.smtpPort | quote }}
+  AI_FEATURES_ENABLED: {{ ternary "true" "false" .Values.ai.enabled | quote }}
+  AI_PROVIDER: {{ .Values.ai.provider | quote }}
+  AI_GATEWAY_BASE_URL: {{ .Values.ai.gatewayBaseUrl | quote }}
+  AI_VECTOR_STORE: {{ .Values.ai.vectorStore | quote }}
+  JOB_RECOMMENDATION_MODEL: {{ .Values.ai.recommendationModel | quote }}
+  RESUME_SCORING_MODEL: {{ .Values.ai.resumeScoringModel | quote }}
+  SKILL_GAP_MODEL: {{ .Values.ai.skillGapModel | quote }}
+  PREDICTIVE_HIRING_MODEL: {{ .Values.ai.predictiveHiringModel | quote }}
+  CHATBOT_MODEL: {{ .Values.ai.chatbotModel | quote }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.api.env.OTEL_EXPORTER_OTLP_ENDPOINT | quote }}

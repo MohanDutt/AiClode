@@ -80,6 +80,12 @@ The web app should expose a locale switcher, remember user overrides, and degrad
 
 ---
 
+## 3.2 AI Experience Requirements
+
+The frontend should present AI outputs as assistive guidance with clear provenance. Recommended surfaces include personalized job recommendation rails, resume match summaries, skill-gap cards, recruiter forecast dashboards, and chatbot entry points with escalation states.
+
+---
+
 ## 4. High-Level Frontend Architecture
 
 ```mermaid

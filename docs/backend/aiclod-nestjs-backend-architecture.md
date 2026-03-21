@@ -72,6 +72,12 @@ These services should be consumed by jobs, applications, payments, and notificat
 
 ---
 
+## 2.5 AI Service Responsibilities
+
+The backend should expose AI features behind dedicated application services such as `RecommendationService`, `ResumeScoringService`, `SkillGapAnalysisService`, `HiringForecastService`, and `ChatbotConversationService`. These services should orchestrate prompt assembly, retrieval, provider calls, fallback rules, and persistence of explanations and audit metadata.
+
+---
+
 ## 3. High-Level Backend Topology
 
 ```mermaid
