@@ -1,0 +1,10 @@
+name: skill-gap-analysis
+locale: en-US
+system_prompt: >-
+  Compare the candidate profile against the job requirements and return missing skills,
+  adjacent skills, and recommended next steps with confidence notes.
+user_prompt_template: >-
+  Job title: {{ job_title }}
+  Required skills: {{ required_skills }}
+  Candidate skills: {{ candidate_skills }}
+  Candidate experience summary: {{ candidate_summary }}
