@@ -15,3 +15,11 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - [Deployment Setup](docs/operations/aiclod-deployment-setup.md)
 - [Testing Strategy](docs/quality/aiclod-testing-strategy.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+
