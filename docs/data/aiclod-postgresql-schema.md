@@ -1116,3 +1116,57 @@ To ensure real multi-tenant safety:
 9. `audit_log_entries`
 
 This order delivers AiClod’s core hiring workflow first, then commercial controls, then search and analytics acceleration layers.
+
+---
+
+## 16. Globalization and Communications Extensions
+
+### 16.1 `locale_preferences`
+
+Stores resolved locale, currency, and timezone preferences at tenant, organization, and user scope.
+
+| Column | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| tenant_id | uuid FK -> tenants.id | nullable for global defaults |
+| organization_id | uuid NULL FK -> organizations.id | |
+| user_id | uuid NULL FK -> users.id | |
+| locale_code | text | e.g. `en-US` |
+| currency_code | text | ISO-4217 |
+| timezone_name | text | IANA timezone |
+| source | text | tenant_default, user_override, browser_detected |
+| created_at | timestamptz | |
+
+### 16.2 `application_form_variants`
+
+Defines versioned, region-aware application form schemas.
+
+| Column | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| tenant_id | uuid FK -> tenants.id | |
+| region_code | text | country/market code |
+| locale_code | text | locale for labels and consent text |
+| schema_json | jsonb | rendered form definition |
+| version | integer | monotonically increasing |
+| is_active | boolean | |
+| created_at | timestamptz | |
+
+### 16.3 `conversations` and `conversation_messages`
+
+Support candidate/employer chat scoped to a tenant and, when applicable, to a job application.
+
+`conversations` should store tenant, organization, application, subject, channel type, last_message_at, and moderation status.
+
+`conversation_messages` should store sender_user_id, body_text, body_rich_json, locale_code, translated_from_locale, attachment metadata, delivery state, and created_at.
+
+### 16.4 `notifications` and `notification_deliveries`
+
+Persist in-app notifications and channel-specific delivery attempts.
+
+- `notifications` stores actor, recipient, event name, payload JSON, locale, and read state.
+- `notification_deliveries` stores notification_id, channel, provider message id, delivery state, retry count, and timestamps.
+
+### 16.5 `email_templates`
+
+Versioned localized transactional templates. Recommended columns: tenant_id, template_key, locale_code, subject_template, body_html_template, body_text_template, version, is_active, and checksum.

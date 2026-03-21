@@ -4,6 +4,17 @@ AiClod is a cloud-agnostic SaaS job portal architecture blueprint designed for b
 
 The recommended default implementation stack is fully open-source: Next.js, NestJS, PostgreSQL, OpenSearch, Valkey, RabbitMQ, MinIO, Keycloak, and Kubernetes-native DevOps tooling.
 
+## Platform Capabilities
+
+- Multi-language user experiences for candidate, employer, and admin journeys.
+- Currency and timezone-aware pricing, billing, scheduling, and reporting.
+- International job applications with region-specific eligibility, consent, and compliance metadata.
+- Omnichannel communication scaffolding for in-app chat, notifications, and localized email templates.
+
+## Documentation
+
+- [System Architecture](docs/architecture/aiclod-system-architecture.md)
+- [Global Platform Features](docs/architecture/aiclod-global-platform-features.md)
 ## Documentation
 
 - [System Architecture](docs/architecture/aiclod-system-architecture.md)
@@ -15,6 +26,12 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - [Deployment Setup](docs/operations/aiclod-deployment-setup.md)
 - [Testing Strategy](docs/quality/aiclod-testing-strategy.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+
+## Scaffold Directories
+
+- `config/i18n/` stores locale metadata and localized email templates.
+- `config/communications/` stores channel policy defaults for chat, notifications, and email delivery.
+- `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)

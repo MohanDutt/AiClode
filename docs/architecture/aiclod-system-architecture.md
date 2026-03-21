@@ -43,6 +43,20 @@ AiClod is a production-ready, cloud-agnostic SaaS job portal for employers, recr
 
 ---
 
+## 2.4 Global Platform Requirements
+
+AiClod must support international hiring operations without introducing region-specific forks. That means the core platform should treat locale, currency, timezone, and communication preferences as first-class configuration primitives rather than optional presentation concerns.
+
+Key requirements:
+
+- locale-aware routing and content delivery for public and authenticated surfaces,
+- currency-aware monetization and reporting defaults,
+- timezone-safe scheduling for interviews, reminders, and SLAs,
+- region-aware job application policies and compliance forms, and
+- omnichannel communication orchestration for chat, notifications, and email.
+
+---
+
 ## 3. Context Diagram
 
 ```mermaid

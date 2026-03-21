@@ -18,6 +18,10 @@ required_files=(
   "config/environments/local.env.example"
   "config/environments/staging.env.example"
   "config/environments/production.env.example"
+  "config/i18n/supported-locales.json"
+  "config/communications/channels.yaml"
+  "config/i18n/email-templates/application-received.en-US.liquid"
+  "docs/architecture/aiclod-global-platform-features.md"
   "docs/operations/aiclod-deployment-setup.md"
   "docs/quality/aiclod-testing-strategy.md"
 )
@@ -27,6 +31,17 @@ for file in "${required_files[@]}"; do
 done
 
 grep -q "services:" docker-compose.yml
+grep -q "mailpit:" docker-compose.yml
+grep -q "build-and-release:" .github/workflows/ci-cd.yml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-api.yaml
+grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-worker.yaml
+grep -q "DEFAULT_PLATFORM_LOCALE" deploy/helm/aiclod/templates/configmap.yaml
+grep -q "SUPPORTED_CURRENCIES" deploy/helm/aiclod/templates/configmap.yaml
+grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
+grep -q "Communication services" docs/operations/aiclod-deployment-setup.md
+grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md
+grep -q "chat" config/communications/channels.yaml
+grep -q '"defaultLocale": "en-US"' config/i18n/supported-locales.json
 grep -q "build-and-release:" .github/workflows/ci-cd.yml
 grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-api.yaml
 grep -q "HorizontalPodAutoscaler" deploy/helm/aiclod/templates/hpa-worker.yaml

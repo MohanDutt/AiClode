@@ -11,6 +11,56 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
+globalization:
+  defaultLocale: en-US
+  supportedLocales:
+    - en-US
+    - es-ES
+    - fr-FR
+    - de-DE
+    - ar-SA
+  defaultTimezone: UTC
+  supportedTimezones:
+    - UTC
+    - America/New_York
+    - Europe/London
+    - Europe/Berlin
+    - Asia/Dubai
+    - Asia/Singapore
+  defaultCurrency: USD
+  supportedCurrencies:
+    - USD
+    - EUR
+    - GBP
+    - CAD
+    - AUD
+    - SGD
+    - AED
+  jobApplicationRegions:
+    - US
+    - CA
+    - GB
+    - DE
+    - FR
+    - AE
+    - SG
+
+communications:
+  baseUrl: https://api.aiclod.example
+  chat:
+    enabled: true
+    transport: websocket
+    moderationQueue: communications.chat.moderation
+  notifications:
+    provider: database,rabbitmq,email
+    digestTime: "08:00"
+  email:
+    provider: smtp
+    fromName: AiClod
+    fromAddress: no-reply@aiclod.example
+    smtpHost: smtp.aiclod.example
+    smtpPort: "587"
+
 web:
   replicaCount: 2
   image:

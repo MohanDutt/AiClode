@@ -58,6 +58,20 @@ Examples:
 
 ---
 
+## 2.4 Globalization and Communication Responsibilities
+
+The backend should centralize cross-cutting global platform concerns in reusable services instead of duplicating them inside feature modules. Recommended shared services include:
+
+- `LocaleResolver` for tenant, user, browser, and template locale fallback,
+- `CurrencyFormatter` and money conversion policy services for billing and display use cases,
+- `TimezoneService` for interview scheduling, reminders, and digest windows,
+- `ApplicationCompliancePolicy` for region-specific application questions and consent capture, and
+- `CommunicationOrchestrator` for chat, notifications, and email template rendering.
+
+These services should be consumed by jobs, applications, payments, and notifications modules through contracts so implementations remain replaceable.
+
+---
+
 ## 3. High-Level Backend Topology
 
 ```mermaid

@@ -66,6 +66,20 @@ This combination supports fast rendering, maintainability, and a component-first
 
 ---
 
+## 3.1 Global UX Requirements
+
+The frontend should be internationalization-ready by default:
+
+- locale-aware routing for public pages, candidate dashboards, and employer tools,
+- currency-aware price and salary formatting using ISO currency codes,
+- timezone-aware rendering for interview schedules, reminders, and analytics windows,
+- translated communication preferences and notification settings, and
+- bidirectional layout support for RTL locales such as Arabic.
+
+The web app should expose a locale switcher, remember user overrides, and degrade gracefully to the tenant default locale.
+
+---
+
 ## 4. High-Level Frontend Architecture
 
 ```mermaid

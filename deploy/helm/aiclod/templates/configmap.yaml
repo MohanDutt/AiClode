@@ -9,4 +9,24 @@ data:
   APP_NAME: {{ .Values.api.env.APP_NAME | quote }}
   PORT: {{ .Values.api.env.PORT | quote }}
   NEXT_PUBLIC_API_BASE_URL: {{ .Values.web.env.NEXT_PUBLIC_API_BASE_URL | quote }}
+  NEXT_PUBLIC_DEFAULT_LOCALE: {{ .Values.globalization.defaultLocale | quote }}
+  NEXT_PUBLIC_SUPPORTED_LOCALES: {{ join "," .Values.globalization.supportedLocales | quote }}
+  NEXT_PUBLIC_DEFAULT_TIMEZONE: {{ .Values.globalization.defaultTimezone | quote }}
+  NEXT_PUBLIC_SUPPORTED_CURRENCIES: {{ join "," .Values.globalization.supportedCurrencies | quote }}
+  DEFAULT_PLATFORM_LOCALE: {{ .Values.globalization.defaultLocale | quote }}
+  SUPPORTED_LOCALES: {{ join "," .Values.globalization.supportedLocales | quote }}
+  DEFAULT_TIMEZONE: {{ .Values.globalization.defaultTimezone | quote }}
+  SUPPORTED_TIMEZONES: {{ join "," .Values.globalization.supportedTimezones | quote }}
+  DEFAULT_CURRENCY: {{ .Values.globalization.defaultCurrency | quote }}
+  SUPPORTED_CURRENCIES: {{ join "," .Values.globalization.supportedCurrencies | quote }}
+  JOB_APPLICATION_REGIONS: {{ join "," .Values.globalization.jobApplicationRegions | quote }}
+  CHAT_TRANSPORT: {{ .Values.communications.chat.transport | quote }}
+  CHAT_WS_BASE_URL: {{ printf "%s/ws" .Values.communications.baseUrl | quote }}
+  NOTIFICATION_PROVIDER: {{ .Values.communications.notifications.provider | quote }}
+  NOTIFICATION_DIGEST_TIME: {{ .Values.communications.notifications.digestTime | quote }}
+  EMAIL_PROVIDER: {{ .Values.communications.email.provider | quote }}
+  EMAIL_FROM_NAME: {{ .Values.communications.email.fromName | quote }}
+  EMAIL_FROM_ADDRESS: {{ .Values.communications.email.fromAddress | quote }}
+  SMTP_HOST: {{ .Values.communications.email.smtpHost | quote }}
+  SMTP_PORT: {{ .Values.communications.email.smtpPort | quote }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.api.env.OTEL_EXPORTER_OTLP_ENDPOINT | quote }}
