@@ -736,6 +736,237 @@ Extract only when one or more of the following occur:
 
 ---
 
+## 17. Complete Open-Source Technology Stack
+
+This section defines the **recommended default open-source stack** for AiClod. Every choice is biased toward:
+
+- strong performance for search-heavy and workflow-heavy job portal traffic,
+- horizontal scalability on Kubernetes,
+- fast local development with Docker Compose, and
+- cloud-agnostic deployment without locking the platform to a single provider.
+
+### 17.1 Primary Stack Decisions
+
+| Layer | Selected Open-Source Tooling | Why This Is the Best Default for AiClod |
+|---|---|---|
+| Frontend | **Next.js (React, TypeScript)** | Hybrid SSR/ISR/CSR delivery improves SEO for public job pages, keeps the employer dashboard responsive, and deploys cleanly in containers or static/CDN-assisted modes. |
+| Backend | **NestJS on Node.js (TypeScript)** | Strong module system, DI, and testing ergonomics align well with a modular monolith and clean architecture while supporting high developer velocity and a unified TypeScript stack. |
+| API Contracts | **OpenAPI + REST**, optional **GraphQL** for back-office aggregation | REST keeps public/job application flows cacheable and simple, while GraphQL can be selectively introduced for complex employer/admin UIs without forcing it across the whole platform. |
+| Database | **PostgreSQL** | Mature relational consistency, excellent indexing, JSONB support, partitioning, and reliable cloud/self-hosted options make it the strongest source-of-truth database for SaaS transactional workloads. |
+| Search | **OpenSearch** | Open-source Lucene-based search with robust full-text, faceting, ranking, and analyzers needed for jobs and candidate discovery at scale. |
+| Cache | **Valkey** | Open-source Redis-compatible cache with strong ecosystem compatibility, low latency, and easy use for caching, rate limiting, and ephemeral coordination. |
+| Queue / Async | **RabbitMQ** | Excellent fit for business workflows, retries, dead-letter queues, routing patterns, and operational simplicity for a modular monolith before Kafka-level scale is required. |
+| Object Storage | **MinIO** | S3-compatible, self-hostable, performs well locally and in Kubernetes, and preserves portability to any S3-compatible or hyperscaler object storage target. |
+| Authentication / IAM | **Keycloak** | Mature open-source identity platform with OIDC, SAML, MFA, social login, brokered enterprise SSO, and multi-tenant-friendly realm/client patterns. |
+| Container Build / Runtime | **Docker + BuildKit** | Ubiquitous local developer experience, deterministic image builds, and straightforward CI/CD integration. |
+| Local Orchestration | **Docker Compose** | Lowest-friction way to run the full developer stack locally with parity for supporting services. |
+| Cloud Orchestration | **Kubernetes** | The most portable scheduling and autoscaling substrate across managed or self-hosted environments. |
+| Kubernetes Packaging | **Helm** with optional **Kustomize overlays** | Helm provides reusable packaging; Kustomize is useful for environment-specific overlays without changing application code. |
+| Ingress | **ingress-nginx** | Widely adopted, cloud-neutral, and feature-rich enough for TLS termination, rate limiting, and path/domain routing. |
+| Certificate Management | **cert-manager** | Standard Kubernetes-native automation for ACME/internal PKI certificate issuance and rotation. |
+| Secrets Delivery | **External Secrets Operator** | Keeps workloads cloud-agnostic while supporting multiple secret backends such as Vault, AWS, Azure, or GCP. |
+| GitOps Delivery | **Argo CD** | Open-source, Kubernetes-native continuous delivery with strong drift detection and environment promotion support. |
+| Infrastructure as Code | **OpenTofu** | Open-source Terraform-compatible IaC with strong multi-cloud and self-hosted ecosystem support. |
+| CI | **Woodpecker CI** | Lightweight, fully open-source, container-native CI that can be self-hosted on any cloud or on-prem environment without tying delivery to a proprietary control plane. |
+| Image Registry | **Harbor** | Open-source OCI registry with role-based access control, image signing support, retention policies, and strong Kubernetes ecosystem alignment. |
+| Vulnerability Scanning | **Trivy** | Fast open-source scanning for containers, IaC, and dependencies that fits both CI pipelines and admission/policy checks. |
+| Observability | **OpenTelemetry Collector + Prometheus + Grafana + Loki + Tempo** | End-to-end open-source telemetry stack for metrics, logs, and traces with portable instrumentation and deep Kubernetes support. |
+| Policy / Security | **Kyverno** | Kubernetes-native policy-as-code for image, pod, and security guardrails without requiring deep Rego expertise. |
+| Service Networking | **Cilium** | High-performance eBPF-based networking, policy enforcement, and observability while remaining Kubernetes-distribution agnostic. |
+| Database Migrations | **Prisma Migrate** or **Flyway** | Schema evolution can stay disciplined and automated; Prisma suits TypeScript-heavy teams, Flyway suits broader polyglot ecosystems. |
+| Background Scheduling | **Kubernetes CronJobs + NestJS scheduler adapters** | Keeps scheduled work simple initially and migratable later without introducing a separate orchestration platform too early. |
+
+### 17.2 Detailed Justification by Platform Area
+
+#### Frontend: Next.js + React + TypeScript
+
+**Why it fits:**
+- Public job listings benefit from **server-side rendering** and **incremental static regeneration**, which improves SEO and time-to-content.
+- Employer dashboards and candidate profile workflows benefit from React’s component ecosystem and mature state/data libraries.
+- TypeScript shared contracts reduce drift between UI and backend DTOs.
+
+**Scalability and performance rationale:**
+- Public, cacheable routes can be pushed to a CDN and served as edge-cached HTML.
+- Authenticated dashboards can use client-side hydration and API caching patterns.
+- Split rendering strategies let AiClod optimize public job discovery and private SaaS interactions independently.
+
+**Cloud-agnostic rationale:**
+- Can run as a standard Node.js container on Kubernetes.
+- Can also export/cache static assets behind any CDN or object storage endpoint.
+
+#### Backend: NestJS on Node.js
+
+**Why it fits:**
+- NestJS enforces module boundaries that align well with the modular monolith domains defined earlier.
+- Dependency injection, interceptors, guards, and pipes support clean architecture, authorization, validation, and observability.
+- Shared TypeScript across frontend and backend improves productivity and reduces integration errors.
+
+**Scalability and performance rationale:**
+- Node.js is highly effective for I/O-heavy SaaS workloads such as auth, CRUD, search APIs, messaging, and plugin orchestration.
+- Heavy CPU or ML-like tasks can be pushed to background workers or isolated plugin runtimes rather than overloading request threads.
+- Horizontal scaling is straightforward because API instances stay stateless.
+
+**Cloud-agnostic rationale:**
+- Runs identically in Docker Compose, Kubernetes, or any OCI-compatible environment.
+- No dependence on provider-specific serverless primitives.
+
+#### Database: PostgreSQL
+
+**Why it fits:**
+- Job applications, employer subscriptions, audit records, workflow states, and permissions all need strong relational integrity.
+- JSONB supports controlled schema flexibility for plugin metadata, dynamic job attributes, and external payload snapshots.
+
+**Scalability and performance rationale:**
+- Strong indexing, partitioning, and read-replica support allow AiClod to scale beyond early-stage usage without replatforming.
+- PgBouncer, partitioned tables, materialized views, and CDC patterns support growth in traffic and analytics.
+
+**Cloud-agnostic rationale:**
+- Available everywhere: managed services, operators on Kubernetes, or self-hosted VMs.
+- Avoids dependence on a proprietary globally distributed SQL layer too early.
+
+#### Search: OpenSearch
+
+**Why it fits:**
+- AiClod requires relevance-ranked full-text search, aggregations, filters, synonyms, analyzers, and indexing pipelines.
+- Candidate and job discovery are first-class product capabilities, not optional features.
+
+**Scalability and performance rationale:**
+- Search workloads are isolated from transactional reads, reducing pressure on PostgreSQL.
+- Horizontal shard/replica scaling and async indexing let search grow independently from the core API.
+
+**Cloud-agnostic rationale:**
+- OpenSearch can be self-managed or consumed as a compatible managed service without changing the application contract.
+
+#### Cache: Valkey
+
+**Why it fits:**
+- Provides the Redis-compatible ecosystem AiClod needs for low-latency caching, rate limiting, distributed locks, and ephemeral state.
+- Avoids coupling the platform to non-open licensing directions.
+
+**Scalability and performance rationale:**
+- Extremely low-latency reads help absorb repeated search/filter requests and hot configuration lookups.
+- Reduces database pressure during traffic spikes.
+
+**Cloud-agnostic rationale:**
+- Runs locally, on Kubernetes, or through managed Redis-compatible services with minimal changes.
+
+#### Queue / Messaging: RabbitMQ
+
+**Why it fits:**
+- AiClod’s async workflows are business-event-driven: notifications, job syndication, parsing, indexing, exports, and webhooks.
+- RabbitMQ’s exchanges, routing keys, retries, and dead-letter queues fit these patterns exceptionally well.
+
+**Scalability and performance rationale:**
+- Handles moderate-to-high throughput very well without the operational overhead of Kafka for an initial modular monolith.
+- Consumers can scale independently by queue depth using KEDA.
+
+**Cloud-agnostic rationale:**
+- RabbitMQ works the same across Compose, Kubernetes, VMs, and managed offerings.
+
+#### Object Storage: MinIO
+
+**Why it fits:**
+- Resumes, employer logos, attachments, exports, and generated reports belong in S3-compatible object storage, not the relational database.
+- MinIO gives the same API locally and in self-hosted production.
+
+**Scalability and performance rationale:**
+- Object storage scales far better than shared filesystems for user-uploaded content.
+- Presigned URLs and CDN fronting reduce application bandwidth costs and latency.
+
+**Cloud-agnostic rationale:**
+- S3 API compatibility preserves the option to move between MinIO, Ceph RGW, AWS S3, GCS interoperability layers, and other compatible providers.
+
+#### Authentication / IAM: Keycloak
+
+**Why it fits:**
+- AiClod needs candidate auth, recruiter auth, admin auth, enterprise SSO, and optional social login without building identity in-house.
+- Keycloak supports OIDC, SAML, MFA, identity brokering, fine-grained clients, and admin APIs.
+
+**Scalability and performance rationale:**
+- Centralizing auth removes security-critical complexity from the application codebase.
+- Scales horizontally behind Kubernetes with externalized databases and caches.
+
+**Cloud-agnostic rationale:**
+- Fully open-source and deployable on any infrastructure without vendor lock-in.
+
+### 17.3 DevOps and Platform Tooling
+
+#### Build, Packaging, and Delivery
+
+- **Docker + BuildKit** for reproducible image builds and layer caching.
+- **Docker Compose** for local full-stack parity.
+- **Kubernetes** as the production scheduler for portable autoscaling and rolling deployments.
+- **Helm** for packaging reusable charts, with **Kustomize** overlays where environment patching is useful.
+- **Argo CD** for GitOps-based reconciliation and auditability.
+- **Woodpecker CI** for self-hosted pipeline execution.
+- **Harbor** for OCI image storage, signing workflows, and retention controls.
+- **Trivy** for image, filesystem, and IaC vulnerability scanning.
+- **OpenTofu** for provisioning DNS, networking, managed databases, buckets, and cluster dependencies across clouds.
+
+**Why this combination works:**
+- It preserves a consistent artifact model from local to production.
+- It avoids provider-specific deployment frameworks.
+- It keeps rollback, drift detection, and environment promotion explicit and auditable.
+
+#### Networking and Security Controls
+
+- **ingress-nginx** for L7 ingress control.
+- **cert-manager** for certificate automation.
+- **External Secrets Operator** for secret synchronization.
+- **Kyverno** for policy enforcement on pods, images, and namespaces.
+- **Cilium** for high-performance networking and network policy enforcement.
+
+**Why this combination works:**
+- All components are open-source, Kubernetes-native, and portable across managed and self-hosted clusters.
+- They improve security posture without changing application code.
+
+#### Observability Stack
+
+- **OpenTelemetry Collector** for telemetry ingestion and vendor-neutral instrumentation.
+- **Prometheus** for metrics scraping and alerting inputs.
+- **Grafana** for dashboards.
+- **Loki** for logs.
+- **Tempo** for traces.
+
+**Why this combination works:**
+- It gives AiClod complete observability with a standard open-source stack.
+- The same instrumentation can later feed commercial APM tools if required, preserving optionality.
+
+### 17.4 End-to-End Stack Summary
+
+```text
+Frontend:        Next.js + React + TypeScript
+Backend:         NestJS + Node.js + TypeScript
+Database:        PostgreSQL
+Search:          OpenSearch
+Cache:           Valkey
+Queue:           RabbitMQ
+Storage:         MinIO (S3-compatible)
+Authentication:  Keycloak
+Local Dev:       Docker Compose
+Cloud Runtime:   Kubernetes
+Packaging:       Helm + Kustomize
+GitOps:          Argo CD
+IaC:             OpenTofu
+Ingress:         ingress-nginx
+Secrets:         External Secrets Operator
+TLS:             cert-manager
+Policy:          Kyverno
+Network:         Cilium
+Observability:   OpenTelemetry + Prometheus + Grafana + Loki + Tempo
+CI:              Woodpecker CI
+```
+
+### 17.5 Why This Stack Is the Recommended Default
+
+This stack is the best default for AiClod because it combines:
+
+- **strong developer productivity** through TypeScript, NestJS, React, and Docker Compose,
+- **scalable runtime characteristics** through stateless app tiers, RabbitMQ workers, OpenSearch, and PostgreSQL,
+- **cloud portability** through Kubernetes, OpenTofu, S3-compatible storage, and open protocols, and
+- **low lock-in risk** because every critical component has a strong open-source deployment path.
+
+The result is a platform that can launch quickly as a modular monolith, scale to meaningful SaaS traffic, and evolve into a more distributed architecture only when that complexity becomes justified.
 ## 17. Recommended Technology Baseline
 
 This architecture is cloud-agnostic, so the technology list is intentionally interchangeable.
@@ -757,12 +988,28 @@ This architecture is cloud-agnostic, so the technology list is intentionally int
 
 ## 18. Executive Summary
 
+AiClod should launch as a **modular monolith** with four primary runtime roles: **web**, **API**, **worker**, and **scheduler**, backed by the following **default open-source stack**:
+
+- **Frontend:** Next.js + React + TypeScript
+- **Backend:** NestJS + Node.js + TypeScript
+- **Database:** PostgreSQL
+- **Search:** OpenSearch
+- **Cache:** Valkey
+- **Queue/Eventing:** RabbitMQ
+- **Object Storage:** MinIO
+- **Authentication:** Keycloak
+- **Delivery:** Woodpecker CI + Harbor + Trivy
+- **Platform:** Docker Compose locally, Kubernetes + Helm + Argo CD in the cloud
+- **Observability:** OpenTelemetry + Prometheus + Grafana + Loki + Tempo
+
+This provides:
 AiClod should launch as a **modular monolith** with four primary runtime roles: **web**, **API**, **worker**, and **scheduler**, backed by **PostgreSQL**, **Redis**, **object storage**, **search**, and a **queue/event layer**. This provides:
 
 - Simple developer onboarding through Docker Compose.
 - Production-grade Kubernetes deployment with autoscaling.
 - Clean Architecture boundaries to protect core domain logic.
 - Plugin-driven extensibility for partner and AI integrations.
+- A fully open-source, cloud-agnostic platform baseline.
 - A deliberate migration path toward microservices only when justified by scale, team topology, or compliance needs.
 
 This design minimizes premature operational complexity while preserving clear extraction seams for future growth.
