@@ -1,0 +1,21 @@
+recommendations:
+  enabled: true
+  retrievalStrategy: hybrid
+  vectorIndex: jobs-semantic
+  fallbackStrategy: popularity
+resumeScoring:
+  enabled: true
+  queueName: ai.resume.scoring
+  scoreRange:
+    min: 0
+    max: 100
+skillGapAnalysis:
+  enabled: true
+  queueName: ai.skill-gap.analysis
+predictiveHiringAnalytics:
+  enabled: true
+  queueName: ai.hiring.analytics
+chatbot:
+  enabled: true
+  transport: websocket
+  escalationTarget: recruiter_support

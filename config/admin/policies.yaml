@@ -1,0 +1,20 @@
+userManagement:
+  enabled: true
+  allowedActions:
+    - suspend_user
+    - restore_user
+    - reset_mfa
+employerManagement:
+  enabled: true
+  onboardingReviewRequired: true
+jobModeration:
+  enabled: true
+  queueName: admin.jobs.moderation
+  autoEscalationThreshold: medium
+fraudDetection:
+  enabled: true
+  queueName: admin.fraud.review
+  riskBands:
+    - low
+    - medium
+    - high
