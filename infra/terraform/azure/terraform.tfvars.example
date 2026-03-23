@@ -1,0 +1,3 @@
+location            = "eastus"
+resource_group_name = "aiclod-rg"
+cluster_name        = "aiclod-aks"

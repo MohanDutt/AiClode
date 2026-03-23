@@ -1,0 +1,23 @@
+chat:
+  enabled: true
+  presenceEnabled: true
+  transports:
+    - websocket
+    - in_app
+  retentionDays: 365
+  moderationQueue: communications.chat.moderation
+notifications:
+  enabledChannels:
+    - in_app
+    - email
+    - push
+  defaultDigestTime: "08:00"
+  queueName: communications.notifications.dispatch
+email:
+  templateEngine: liquid
+  provider: smtp
+  defaultFromName: AiClod
+  templateLocales:
+    - en-US
+    - es-ES
+  queueName: communications.email.dispatch
