@@ -14,6 +14,7 @@ bootstrap-gcp:
 
 bootstrap-azure:
 	./scripts/bootstrap.sh --target azure
+.PHONY: test-local test-config test-unit test-integration test-api test-e2e test-load-smoke
 
 test-local:
 	./scripts/test-local.sh
