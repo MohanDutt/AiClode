@@ -1,0 +1,10 @@
+{
+  "defaultLocale": "en-US",
+  "supportedLocales": [
+    {"code": "en-US", "label": "English (United States)", "currency": "USD", "timezone": "America/New_York", "rtl": false},
+    {"code": "es-ES", "label": "Español (España)", "currency": "EUR", "timezone": "Europe/Madrid", "rtl": false},
+    {"code": "fr-FR", "label": "Français (France)", "currency": "EUR", "timezone": "Europe/Paris", "rtl": false},
+    {"code": "de-DE", "label": "Deutsch (Deutschland)", "currency": "EUR", "timezone": "Europe/Berlin", "rtl": false},
+    {"code": "ar-SA", "label": "العربية (السعودية)", "currency": "AED", "timezone": "Asia/Riyadh", "rtl": true}
+  ]
+}

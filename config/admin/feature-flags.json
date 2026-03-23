@@ -1,0 +1,9 @@
+{
+  "provider": "config",
+  "flags": [
+    {"key": "admin_dashboard", "type": "boolean", "default": true},
+    {"key": "fraud_review_queue", "type": "boolean", "default": true},
+    {"key": "job_auto_moderation", "type": "boolean", "default": false},
+    {"key": "revenue_reporting", "type": "boolean", "default": true}
+  ]
+}
