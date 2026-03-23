@@ -26,6 +26,10 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import json
+      - name: Validate YAML files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
           import yaml
 
           yaml_files = [
@@ -43,6 +47,8 @@ jobs:
               *Path('config/i18n').glob('*.json'),
               *Path('config/ai').glob('*.json'),
               *Path('config/admin').glob('*.json'),
+              *Path('deploy').rglob('*.yaml'),
+              *Path('deploy').rglob('*.yml'),
           ]
           for path in yaml_files:
               with path.open() as fh:
@@ -51,6 +57,7 @@ jobs:
               with path.open() as fh:
                   json.load(fh)
           print(f"validated {len(yaml_files)} YAML-like files and {len(json_files)} JSON files")
+          print(f"validated {len(yaml_files)} YAML files")
           PY
 
       - name: Validate env templates exist
