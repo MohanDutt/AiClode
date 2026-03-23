@@ -36,6 +36,8 @@ required_files=(
   "docs/operations/aiclod-one-click-bootstrap.md"
   "docs/operations/aiclod-scaling-guide.md"
   "docs/quality/aiclod-testing-strategy.md"
+  "bootstrap.sh"
+  "bootstrap.ps1"
   "scripts/bootstrap.py"
   "scripts/bootstrap.sh"
   "scripts/bootstrap.ps1"
@@ -80,6 +82,11 @@ grep -q "fraud detection" docs/architecture/aiclod-admin-platform.md
 grep -q "GET /admin/users" docs/api/aiclod-api-reference.md
 grep -q "queue depth" docs/operations/aiclod-scaling-guide.md
 grep -q "monthly recurring revenue" docs/business/aiclod-business-model.md
+grep -q "./bootstrap.sh --target local" docs/operations/aiclod-one-click-bootstrap.md
+grep -q "scripts/bootstrap.sh" bootstrap.sh
+grep -q -- "-auto-approve" scripts/bootstrap.py
+grep -q "bootstrap-local:" Makefile
+grep -q "terraform fmt -check -recursive infra/terraform" .github/workflows/ci-cd.yml
 grep -q "./scripts/bootstrap.sh --target local" docs/operations/aiclod-one-click-bootstrap.md
 grep -q -- "-auto-approve" scripts/bootstrap.py
 grep -q "bootstrap-local:" Makefile

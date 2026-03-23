@@ -1,6 +1,19 @@
 .PHONY: bootstrap bootstrap-local bootstrap-aws bootstrap-gcp bootstrap-azure test-local test-config test-unit test-integration test-api test-e2e test-load-smoke
 
 bootstrap:
+	./bootstrap.sh --target local
+
+bootstrap-local:
+	./bootstrap.sh --target local
+
+bootstrap-aws:
+	./bootstrap.sh --target aws
+
+bootstrap-gcp:
+	./bootstrap.sh --target gcp
+
+bootstrap-azure:
+	./bootstrap.sh --target azure
 	./scripts/bootstrap.sh --target local
 
 bootstrap-local:

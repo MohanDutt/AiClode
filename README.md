@@ -34,6 +34,10 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 
 ## Quick Start
 
+- Linux/macOS: `./bootstrap.sh --target local`
+- Windows PowerShell: `pwsh -File .\bootstrap.ps1 -Target local`
+- Cloud targets: replace `local` with `aws`, `gcp`, or `azure`.
+
 - Linux/macOS: `./scripts/bootstrap.sh --target local`
 - Windows PowerShell: `pwsh -File .\scripts\bootstrap.ps1 -Target local`
 - Cloud targets: replace `local` with `aws`, `gcp`, or `azure`.
