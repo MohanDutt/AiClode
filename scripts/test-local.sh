@@ -30,6 +30,10 @@ required_files=(
   "docs/architecture/aiclod-global-platform-features.md"
   "docs/architecture/aiclod-ai-features.md"
   "docs/architecture/aiclod-admin-platform.md"
+  "docs/api/aiclod-api-reference.md"
+  "docs/business/aiclod-business-model.md"
+  "docs/operations/aiclod-deployment-setup.md"
+  "docs/operations/aiclod-scaling-guide.md"
   "config/i18n/email-templates/application-received.en-US.liquid"
   "docs/architecture/aiclod-global-platform-features.md"
   "docs/architecture/aiclod-ai-features.md"
@@ -63,6 +67,9 @@ grep -q "Admin runtime defaults" docs/operations/aiclod-deployment-setup.md
 grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md
 grep -q "job recommendations" docs/architecture/aiclod-ai-features.md
 grep -q "fraud detection" docs/architecture/aiclod-admin-platform.md
+grep -q "GET /admin/users" docs/api/aiclod-api-reference.md
+grep -q "queue depth" docs/operations/aiclod-scaling-guide.md
+grep -q "monthly recurring revenue" docs/business/aiclod-business-model.md
 grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
 grep -q "AI runtime defaults" docs/operations/aiclod-deployment-setup.md
 grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md

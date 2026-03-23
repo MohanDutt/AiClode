@@ -33,6 +33,7 @@ This repository includes deployment scaffolding for:
 - `config/admin/policies.yaml`
 - `config/admin/dashboard-metrics.yaml`
 - `config/admin/feature-flags.json`
+- `docs/operations/aiclod-scaling-guide.md`
 
 ## Local Usage
 
@@ -78,5 +79,12 @@ This keeps web, API, and worker runtimes aligned on the same internationalizatio
 - Secrets in Helm are placeholders and should be replaced with External Secrets or a secret manager for real environments.
 - The GitHub Actions release job activates once application Dockerfiles are present under `apps/web`, `apps/api`, and `apps/worker`.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, AI inference latency, and admin queue backlog.
+
+
+## Related Documentation
+
+- `docs/api/aiclod-api-reference.md` for route and payload guidance.
+- `docs/operations/aiclod-scaling-guide.md` for workload and dependency scaling recommendations.
+- `docs/business/aiclod-business-model.md` for packaging, monetization, and KPI guidance.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, and AI inference latency.
 - OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, and email dispatch worker health.
