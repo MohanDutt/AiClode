@@ -33,6 +33,16 @@ required_files=(
   "docs/api/aiclod-api-reference.md"
   "docs/business/aiclod-business-model.md"
   "docs/operations/aiclod-deployment-setup.md"
+  "docs/operations/aiclod-one-click-bootstrap.md"
+  "docs/operations/aiclod-scaling-guide.md"
+  "docs/quality/aiclod-testing-strategy.md"
+  "scripts/bootstrap.py"
+  "scripts/bootstrap.sh"
+  "scripts/bootstrap.ps1"
+  "infra/terraform/README.md"
+  "infra/terraform/aws/main.tf"
+  "infra/terraform/gcp/main.tf"
+  "infra/terraform/azure/main.tf"
   "docs/operations/aiclod-scaling-guide.md"
   "config/i18n/email-templates/application-received.en-US.liquid"
   "docs/architecture/aiclod-global-platform-features.md"
@@ -70,6 +80,10 @@ grep -q "fraud detection" docs/architecture/aiclod-admin-platform.md
 grep -q "GET /admin/users" docs/api/aiclod-api-reference.md
 grep -q "queue depth" docs/operations/aiclod-scaling-guide.md
 grep -q "monthly recurring revenue" docs/business/aiclod-business-model.md
+grep -q "./scripts/bootstrap.sh --target local" docs/operations/aiclod-one-click-bootstrap.md
+grep -q -- "-auto-approve" scripts/bootstrap.py
+grep -q "bootstrap-local:" Makefile
+grep -q "terraform fmt -check -recursive infra/terraform" .github/workflows/ci-cd.yml
 grep -q "OpenTelemetry Collector" docs/operations/aiclod-deployment-setup.md
 grep -q "AI runtime defaults" docs/operations/aiclod-deployment-setup.md
 grep -q "multi-language" docs/architecture/aiclod-global-platform-features.md
@@ -109,6 +123,12 @@ if command -v helm >/dev/null 2>&1; then
   helm lint ./deploy/helm/aiclod >/dev/null
 else
   echo "WARNING: helm not installed; skipped helm lint" >&2
+fi
+
+if command -v terraform >/dev/null 2>&1; then
+  terraform fmt -check -recursive infra/terraform >/dev/null
+else
+  echo "WARNING: terraform not installed; skipped terraform fmt" >&2
 fi
 
 echo "Local deployment and testing scaffolding validation passed"

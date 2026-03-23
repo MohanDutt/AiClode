@@ -27,6 +27,17 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - [Business Model](docs/business/aiclod-business-model.md)
 - [Security Architecture](docs/security/aiclod-security-architecture.md)
 - [Deployment Setup](docs/operations/aiclod-deployment-setup.md)
+- [One-Click Bootstrap](docs/operations/aiclod-one-click-bootstrap.md)
+- [Scaling Guide](docs/operations/aiclod-scaling-guide.md)
+- [Testing Strategy](docs/quality/aiclod-testing-strategy.md)
+- [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
+
+## Quick Start
+
+- Linux/macOS: `./scripts/bootstrap.sh --target local`
+- Windows PowerShell: `pwsh -File .\scripts\bootstrap.ps1 -Target local`
+- Cloud targets: replace `local` with `aws`, `gcp`, or `azure`.
+
 - [Scaling Guide](docs/operations/aiclod-scaling-guide.md)
 ## Documentation
 
@@ -47,6 +58,7 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - `config/ai/` stores AI feature flags, model routing defaults, and prompt templates.
 - `config/admin/` stores admin policies, dashboard defaults, and feature-flag metadata.
 - `config/environments/` contains environment variable templates for local, staging, and production deployments.
+- `infra/terraform/` contains provider-specific infrastructure entry points for AWS, GCP, and Azure.
 - `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - `config/environments/` contains environment variable templates for local, staging, and production deployments.
 - [PostgreSQL Schema](docs/data/aiclod-postgresql-schema.md)
