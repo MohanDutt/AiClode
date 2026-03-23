@@ -18,6 +18,10 @@ This repository now uses that approach.
 ./bootstrap.sh --target aws
 ./bootstrap.sh --target gcp
 ./bootstrap.sh --target azure
+./scripts/bootstrap.sh --target local
+./scripts/bootstrap.sh --target aws
+./scripts/bootstrap.sh --target gcp
+./scripts/bootstrap.sh --target azure
 ```
 
 ### Windows PowerShell
@@ -27,6 +31,10 @@ pwsh -File .\bootstrap.ps1 -Target local
 pwsh -File .\bootstrap.ps1 -Target aws
 pwsh -File .\bootstrap.ps1 -Target gcp
 pwsh -File .\bootstrap.ps1 -Target azure
+pwsh -File .\scripts\bootstrap.ps1 -Target local
+pwsh -File .\scripts\bootstrap.ps1 -Target aws
+pwsh -File .\scripts\bootstrap.ps1 -Target gcp
+pwsh -File .\scripts\bootstrap.ps1 -Target azure
 ```
 
 ## What the Bootstrap Does

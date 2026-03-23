@@ -68,6 +68,10 @@ The Helm chart config map publishes platform-wide runtime values for:
 
 This keeps web, API, and worker runtimes aligned on the same internationalization, communications, AI, and admin defaults.
 
+This keeps web, API, and worker runtimes aligned on the same internationalization, communications, and AI defaults.
+
+This keeps web, API, and worker runtimes aligned on the same internationalization and communications defaults.
+
 ## Notes
 
 - The chart assumes external managed data services in production.
@@ -83,3 +87,6 @@ This keeps web, API, and worker runtimes aligned on the same internationalizatio
 - `docs/operations/aiclod-scaling-guide.md` for workload and dependency scaling recommendations.
 - `docs/operations/aiclod-one-click-bootstrap.md` for cross-platform localhost and cloud bootstrap commands.
 - `docs/business/aiclod-business-model.md` for packaging, monetization, and KPI guidance.
+- `docs/business/aiclod-business-model.md` for packaging, monetization, and KPI guidance.
+- OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, email dispatch worker health, and AI inference latency.
+- OpenTelemetry Collector remains the recommended path for tracing chat delivery latency, notification fan-out, and email dispatch worker health.
