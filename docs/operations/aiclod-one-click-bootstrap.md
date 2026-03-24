@@ -18,6 +18,10 @@ This repository now uses that approach.
 ./bootstrap.sh --target aws
 ./bootstrap.sh --target gcp
 ./bootstrap.sh --target azure
+./scripts/bootstrap.sh --target local
+./scripts/bootstrap.sh --target aws
+./scripts/bootstrap.sh --target gcp
+./scripts/bootstrap.sh --target azure
 ```
 
 ### Windows PowerShell
@@ -27,6 +31,10 @@ pwsh -File .\bootstrap.ps1 -Target local
 pwsh -File .\bootstrap.ps1 -Target aws
 pwsh -File .\bootstrap.ps1 -Target gcp
 pwsh -File .\bootstrap.ps1 -Target azure
+pwsh -File .\scripts\bootstrap.ps1 -Target local
+pwsh -File .\scripts\bootstrap.ps1 -Target aws
+pwsh -File .\scripts\bootstrap.ps1 -Target gcp
+pwsh -File .\scripts\bootstrap.ps1 -Target azure
 ```
 
 ## What the Bootstrap Does
@@ -35,6 +43,7 @@ pwsh -File .\bootstrap.ps1 -Target azure
 - checks required prerequisites,
 - attempts automatic installation when the package manager is supported,
 - builds and starts the local Docker Compose stack for `local`, or
+- starts the local Docker Compose stack for `local`, or
 - provisions cloud infrastructure with Terraform and deploys the Helm chart for `aws`, `gcp`, or `azure`.
 
 ## Prerequisite Strategy

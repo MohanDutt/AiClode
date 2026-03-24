@@ -121,6 +121,7 @@ def ensure_tools(target: str, auto_install: bool) -> None:
 def bootstrap_local() -> None:
     ensure_tools("local", auto_install=args.auto_install)
     run(["docker", "compose", "up", "-d", "--build"], cwd=ROOT)
+    run(["docker", "compose", "up", "-d"], cwd=ROOT)
     print("[bootstrap] local stack started. web=http://localhost:3001 api=http://localhost:3000 mailpit=http://localhost:8025")
 
 
