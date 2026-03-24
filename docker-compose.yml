@@ -1,0 +1,229 @@
+name: aiclod
+
+services:
+  web:
+    build:
+      context: ./apps/web
+    image: ${AICLOD_WEB_IMAGE:-ghcr.io/aiclod/web}:${AICLOD_IMAGE_TAG:-local}
+    env_file:
+      - ./config/environments/local.env.example
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3000/api/v1
+      NEXT_PUBLIC_DEFAULT_LOCALE: en-US
+      NEXT_PUBLIC_SUPPORTED_LOCALES: en-US,es-ES,fr-FR,de-DE,ar-SA
+      NEXT_PUBLIC_SUPPORTED_CURRENCIES: USD,EUR,GBP,CAD,AUD,SGD,AED
+      NEXT_PUBLIC_DEFAULT_TIMEZONE: UTC
+      NEXT_PUBLIC_AI_CHATBOT_ENABLED: "true"
+      NEXT_PUBLIC_AI_RECOMMENDATIONS_ENABLED: "true"
+      NEXT_PUBLIC_ADMIN_CONSOLE_ENABLED: "true"
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - aiclod
+
+  api:
+    build:
+      context: ./apps/api
+    image: ${AICLOD_API_IMAGE:-ghcr.io/aiclod/api}:${AICLOD_IMAGE_TAG:-local}
+    env_file:
+      - ./config/environments/local.env.example
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://aiclod:aiclod@postgres:5432/aiclod
+      REDIS_URL: redis://valkey:6379
+      RABBITMQ_URL: amqp://aiclod:aiclod@rabbitmq:5672
+      OPENSEARCH_URL: http://opensearch:9200
+      S3_ENDPOINT: http://minio:9000
+      KEYCLOAK_BASE_URL: http://keycloak:8080
+      CHAT_WS_BASE_URL: ws://localhost:3000/ws
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+      AI_FEATURES_ENABLED: "true"
+      AI_GATEWAY_BASE_URL: http://api:3000/ai
+      AI_VECTOR_STORE: opensearch
+      JOB_RECOMMENDATION_MODEL: job-recommender-v1
+      RESUME_SCORING_MODEL: resume-ranker-v1
+      SKILL_GAP_MODEL: skill-gap-analyst-v1
+      PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
+      CHATBOT_MODEL: candidate-assistant-v1
+      ADMIN_CONSOLE_ENABLED: "true"
+      ADMIN_API_BASE_URL: http://localhost:3000/api/v1/admin
+      ADMIN_FRAUD_QUEUE: admin.fraud.review
+      ADMIN_ANALYTICS_PROVIDER: postgres
+      ADMIN_REVENUE_CURRENCY: USD
+      FEATURE_FLAG_PROVIDER: config
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      valkey:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      opensearch:
+        condition: service_started
+      minio:
+        condition: service_started
+      keycloak:
+        condition: service_started
+      mailpit:
+        condition: service_started
+    networks:
+      - aiclod
+
+  worker:
+    build:
+      context: ./apps/worker
+    image: ${AICLOD_WORKER_IMAGE:-ghcr.io/aiclod/worker}:${AICLOD_IMAGE_TAG:-local}
+    env_file:
+      - ./config/environments/local.env.example
+    environment:
+      DATABASE_URL: postgresql://aiclod:aiclod@postgres:5432/aiclod
+      REDIS_URL: redis://valkey:6379
+      RABBITMQ_URL: amqp://aiclod:aiclod@rabbitmq:5672
+      OPENSEARCH_URL: http://opensearch:9200
+      S3_ENDPOINT: http://minio:9000
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+      NOTIFICATION_PROVIDER: database,rabbitmq,email
+      AI_FEATURES_ENABLED: "true"
+      AI_GATEWAY_BASE_URL: http://api:3000/ai
+      JOB_RECOMMENDATION_MODEL: job-recommender-v1
+      RESUME_SCORING_MODEL: resume-ranker-v1
+      SKILL_GAP_MODEL: skill-gap-analyst-v1
+      PREDICTIVE_HIRING_MODEL: hiring-forecast-v1
+      CHATBOT_MODEL: candidate-assistant-v1
+      ADMIN_CONSOLE_ENABLED: "true"
+      ADMIN_API_BASE_URL: http://api:3000/api/v1/admin
+      ADMIN_FRAUD_QUEUE: admin.fraud.review
+      ADMIN_ANALYTICS_PROVIDER: postgres
+      ADMIN_REVENUE_CURRENCY: USD
+      FEATURE_FLAG_PROVIDER: config
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      opensearch:
+        condition: service_started
+      mailpit:
+        condition: service_started
+    networks:
+      - aiclod
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: aiclod
+      POSTGRES_USER: aiclod
+      POSTGRES_PASSWORD: aiclod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aiclod -d aiclod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aiclod
+
+  valkey:
+    image: valkey/valkey:7.2-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - aiclod
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: aiclod
+      RABBITMQ_DEFAULT_PASS: aiclod
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - aiclod
+
+  opensearch:
+    image: opensearchproject/opensearch:2.15.0
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: changeme123!
+      bootstrap.memory_lock: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    networks:
+      - aiclod
+
+  minio:
+    image: minio/minio:RELEASE.2025-02-28T09-55-16Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+    networks:
+      - aiclod
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.6
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    networks:
+      - aiclod
+
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - aiclod
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.109.0
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./deploy/monitoring/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "8889:8889"
+    networks:
+      - aiclod
+
+volumes:
+  postgres-data:
+  opensearch-data:
+  minio-data:
+
+networks:
+  aiclod:
+    driver: bridge

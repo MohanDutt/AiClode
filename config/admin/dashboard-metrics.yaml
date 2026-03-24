@@ -1,0 +1,15 @@
+analyticsDashboard:
+  sections:
+    - marketplace_health
+    - moderation_queue
+    - revenue_overview
+    - fraud_risk
+revenueTracking:
+  defaultCurrency: USD
+  metrics:
+    - mrr
+    - arr
+    - gross_payment_volume
+    - refunds
+featureFlags:
+  changeApprovalRequired: true
