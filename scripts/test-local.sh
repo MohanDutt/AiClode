@@ -45,6 +45,12 @@ required_files=(
   "infra/terraform/aws/main.tf"
   "infra/terraform/gcp/main.tf"
   "infra/terraform/azure/main.tf"
+  "apps/web/Dockerfile"
+  "apps/web/server.py"
+  "apps/api/Dockerfile"
+  "apps/api/app.py"
+  "apps/worker/Dockerfile"
+  "apps/worker/worker.py"
   "docs/operations/aiclod-scaling-guide.md"
   "config/i18n/email-templates/application-received.en-US.liquid"
   "docs/architecture/aiclod-global-platform-features.md"
@@ -62,6 +68,7 @@ done
 grep -q "services:" docker-compose.yml
 grep -q "mailpit:" docker-compose.yml
 grep -q "AI_FEATURES_ENABLED" docker-compose.yml
+grep -q "build:" docker-compose.yml
 grep -q "ADMIN_CONSOLE_ENABLED" docker-compose.yml
 grep -q "build-and-release:" .github/workflows/ci-cd.yml
 grep -q "config/ai" .github/workflows/ci-cd.yml
@@ -85,6 +92,9 @@ grep -q "monthly recurring revenue" docs/business/aiclod-business-model.md
 grep -q "./bootstrap.sh --target local" docs/operations/aiclod-one-click-bootstrap.md
 grep -q "scripts/bootstrap.sh" bootstrap.sh
 grep -q -- "-auto-approve" scripts/bootstrap.py
+grep -q -- "--build" scripts/bootstrap.py
+grep -q "bootstrap-local:" Makefile
+grep -q "terraform fmt -check -recursive infra/terraform" .github/workflows/ci-cd.yml
 grep -q "bootstrap-local:" Makefile
 grep -q "terraform fmt -check -recursive infra/terraform" .github/workflows/ci-cd.yml
 grep -q "./scripts/bootstrap.sh --target local" docs/operations/aiclod-one-click-bootstrap.md

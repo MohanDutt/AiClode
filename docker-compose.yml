@@ -2,6 +2,8 @@ name: aiclod
 
 services:
   web:
+    build:
+      context: ./apps/web
     image: ${AICLOD_WEB_IMAGE:-ghcr.io/aiclod/web}:${AICLOD_IMAGE_TAG:-local}
     env_file:
       - ./config/environments/local.env.example
@@ -24,6 +26,8 @@ services:
       - aiclod
 
   api:
+    build:
+      context: ./apps/api
     image: ${AICLOD_API_IMAGE:-ghcr.io/aiclod/api}:${AICLOD_IMAGE_TAG:-local}
     env_file:
       - ./config/environments/local.env.example
@@ -74,6 +78,8 @@ services:
       - aiclod
 
   worker:
+    build:
+      context: ./apps/worker
     image: ${AICLOD_WORKER_IMAGE:-ghcr.io/aiclod/worker}:${AICLOD_IMAGE_TAG:-local}
     env_file:
       - ./config/environments/local.env.example

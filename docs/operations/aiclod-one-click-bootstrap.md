@@ -42,6 +42,7 @@ pwsh -File .\scripts\bootstrap.ps1 -Target azure
 - detects the operating system and available package manager,
 - checks required prerequisites,
 - attempts automatic installation when the package manager is supported,
+- builds and starts the local Docker Compose stack for `local`, or
 - starts the local Docker Compose stack for `local`, or
 - provisions cloud infrastructure with Terraform and deploys the Helm chart for `aws`, `gcp`, or `azure`.
 
@@ -72,3 +73,8 @@ Each provider directory includes a `terraform.tfvars.example` file that should b
 - Local bootstrap is the fastest path for contributor onboarding.
 - Cloud bootstrap assumes credentials for the selected provider are already available.
 - The bootstrap layer is designed to be opinionated but extensible; enterprise teams can swap provider modules or override Helm values as needed.
+
+
+## Local Placeholder Services
+
+The repository includes minimal buildable placeholder containers under `apps/web`, `apps/api`, and `apps/worker` so `--target local` works immediately even before the production application code is implemented.

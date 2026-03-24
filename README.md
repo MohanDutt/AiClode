@@ -37,6 +37,7 @@ The recommended default implementation stack is fully open-source: Next.js, Nest
 - Linux/macOS: `./bootstrap.sh --target local`
 - Windows PowerShell: `pwsh -File .\bootstrap.ps1 -Target local`
 - Cloud targets: replace `local` with `aws`, `gcp`, or `azure`.
+- Local bootstrap now builds placeholder app containers from `apps/web`, `apps/api`, and `apps/worker` so localhost startup succeeds before the full product code is added.
 
 - Linux/macOS: `./scripts/bootstrap.sh --target local`
 - Windows PowerShell: `pwsh -File .\scripts\bootstrap.ps1 -Target local`
